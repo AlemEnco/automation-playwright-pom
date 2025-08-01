@@ -60,12 +60,12 @@ BASE_URL=https://your-app-url.com
 ENVIRONMENT=development
 
 # Database
-DATABASE_URL=postgresql://username:password@localhost:5432/qa_automation_db
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=qa_automation_db
-DB_USER=username
-DB_PASSWORD=password
+DATABASE_URL=
+DB_HOST=
+DB_PORT=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
 
 # Test Configuration
 HEADLESS=true
@@ -73,12 +73,12 @@ BROWSER=chromium
 TIMEOUT=30000
 RETRIES=2
 WORKERS=4
-TEST_USERNAME=your-test-username
-TEST_PASSWORD=your-test-password
+TEST_USERNAME=
+TEST_PASSWORD=
 
 # API Endpoints
-API_BASE_URL_IMPORTACION_DEV=https://api-dev.example.com
-API_BASE_URL_GEO_DEV=https://geo-api-dev.example.com
+API_BASE_URL_IMPORTACION_DEV=
+API_BASE_URL_GEO_DEV=
 GEO_X_API_KEY=your-api-key
 ```
 
