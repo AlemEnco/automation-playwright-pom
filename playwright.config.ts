@@ -24,23 +24,23 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-        ['html', { outputFolder: 'playwright-report' }],
-        ['json', { outputFile: 'test-results/results.json' }],
-        ['junit', { outputFile: 'test-results/junit.xml' }],
-        ['list'],
-    ],
+    ['html', { outputFolder: 'playwright-report' }],
+    ['json', { outputFile: 'test-results/results.json' }],
+    ['junit', { outputFile: 'test-results/junit.xml' }],
+    ['list'],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
     baseURL: environment.baseUrl, // solo para pruebas web
-        actionTimeout: environment.test.timeout,
-        navigationTimeout: environment.test.timeout,
-        screenshot: 'only-on-failure',
-        video: 'retain-on-failure',
-        ignoreHTTPSErrors: true,
-        viewport: { width: 1280, height: 720 },
-        userAgent: 'Playwright-ShippingPlatform-Automation',
+    actionTimeout: environment.test.timeout,
+    navigationTimeout: environment.test.timeout,
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    ignoreHTTPSErrors: true,
+    viewport: { width: 1280, height: 720 },
+    userAgent: 'Playwright-ShippingPlatform-Automation',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -91,17 +91,17 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
   globalSetup: './tests/setup/global-setup',
-    globalTeardown: './tests/setup/global-teardown',
-    timeout: 60000,
-    expect: {
-        timeout: 10000,
-    },
-    outputDir: 'test-results/',
-    preserveOutput: 'failures-only',
-    maxFailures: process.env.CI ? 10 : undefined,
-    metadata: {
-        'test-environment': environment.environment,
-        'base-url': environment.baseUrl,
-        'browser': environment.test.browser,
-    }
+  globalTeardown: './tests/setup/global-teardown',
+  timeout: 60000,
+  expect: {
+    timeout: 10000,
+  },
+  outputDir: 'test-results/',
+  preserveOutput: 'failures-only',
+  maxFailures: process.env.CI ? 10 : undefined,
+  metadata: {
+    'test-environment': environment.environment,
+    'base-url': environment.baseUrl,
+    'browser': environment.test.browser,
+  }
 });
