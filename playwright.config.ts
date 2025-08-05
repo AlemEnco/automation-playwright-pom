@@ -1,5 +1,5 @@
-import { defineConfig, devices } from '@playwright/test';
-import { environment } from './src/config/environment';
+import { defineConfig, devices } from '@playwright/test'
+import { environment } from './src/config/environment'
 
 /**
  * Read environment variables from file.
@@ -21,13 +21,13 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 0,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html', { outputFolder: 'playwright-report' }],
     ['json', { outputFile: 'test-results/results.json' }],
     ['junit', { outputFile: 'test-results/junit.xml' }],
-    ['list'],
+    ['list']
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -43,15 +43,15 @@ export default defineConfig({
     userAgent: 'Playwright-ShippingPlatform-Automation',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'on-first-retry'
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+      use: { ...devices['Desktop Chrome'] }
+    }
 
     // {
     //   name: 'firefox',
@@ -94,14 +94,14 @@ export default defineConfig({
   globalTeardown: './tests/setup/global-teardown',
   timeout: 60000,
   expect: {
-    timeout: 10000,
+    timeout: 10000
   },
   outputDir: 'test-results/',
   preserveOutput: 'failures-only',
-  maxFailures: process.env.CI ? 10 : undefined,
+  maxFailures: process.env.CI ? 10 : 0,
   metadata: {
     'test-environment': environment.environment,
     'base-url': environment.baseUrl,
-    'browser': environment.test.browser,
+    browser: environment.test.browser
   }
-});
+})

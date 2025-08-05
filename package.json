@@ -2,18 +2,35 @@
   "name": "automation-playwright-pom",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "fix": "biome check --write",
+    "lint": "biome check",
+    "prepare": "husky",
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "tsc": "tsc"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "biome check --write",
+      "bash -c tsc --noEmit true"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "@playwright/test": "^1.54.2",
-    "@types/node": "^24.1.0"
-  },
   "dependencies": {
     "@prisma/client": "^6.13.0",
     "dotenv": "^17.2.1",
     "prisma": "^6.13.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.4",
+    "typescript": "^5.9.2"
   }
 }
