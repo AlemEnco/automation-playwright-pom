@@ -1,246 +1,230 @@
-# Automation Playwright POM
+# Automation Playwright - Proyecto de Automatización
 
-A robust test automation framework built with Playwright and TypeScript, implementing the Page Object Model (POM) pattern for scalable and maintainable end-to-end testing.
+Proyecto de automatización de pruebas web y APIs usando Playwright y TypeScript con el patrón Page Object Model (POM).
 
-## 🚀 Features
+## 🚀 Características
 
-- **Page Object Model (POM)** - Clean separation of test logic and page elements
-- **TypeScript Support** - Type-safe test development
-- **Multi-browser Testing** - Support for Chromium, Firefox, and WebKit
-- **Database Integration** - Prisma ORM for test data management
-- **Environment Configuration** - Flexible configuration for different environments
-- **Rich Reporting** - HTML, JSON, and JUnit reports
-- **CI/CD Ready** - Optimized for continuous integration pipelines
+- **TypeScript** - Desarrollo type-safe
+- **Playwright** - Framework moderno para testing web y APIs
+- **Page Object Model** - Patrón de diseño para organizar el código
+- **Biome** - Linter y formateador de código
+- **Multi-browser** - Soporte para Chromium, Firefox y WebKit
 
-## 📋 Prerequisites
+## 📋 Prerequisitos
 
 - Node.js (>= 18.0.0)
-- npm or yarn
-- PostgreSQL database (for test data management)
+- npm
+- Visual Studio Code (recomendado)
 
-## 🛠️ Installation
+### Extensiones Recomendadas para VS Code
 
-1. Clone the repository:
+Si usas Visual Studio Code, instala estas extensiones para mejorar tu experiencia de desarrollo:
+
+1. **Playwright Test for VSCode** (`ms-playwright.playwright`)
+   - Ejecuta y depura tests directamente desde el editor
+   - Visualiza los tests en el explorador lateral
+   - Genera tests grabando interacciones en el navegador
+   - Muestra resultados de tests en tiempo real
+   - Permite ejecutar tests individuales con un clic
+
+2. **Todo Tree** (`Gruntfuggly.todo-tree`)
+   - Resalta comentarios TODO, FIXME, NOTE en el código
+   - Muestra todos los TODOs en una vista de árbol
+   - Útil para rastrear tareas pendientes en los retos
+   - Ayuda a identificar rápidamente qué falta implementar
+
+Para instalarlas:
 ```bash
-git clone <repository-url>
-cd automation-playwright-pom
+# Desde la terminal
+code --install-extension ms-playwright.playwright
+code --install-extension Gruntfuggly.todo-tree
 ```
 
-2. Install dependencies:
+O búscalas en el marketplace de extensiones de VS Code.
+
+## 🛠️ Instalación
+
+1. Descarga el repositorio
+
+2. Instala las dependencias:
 ```bash
 npm install
 ```
 
-3. Install Playwright browsers:
+3. Instala los navegadores de Playwright:
 ```bash
 npx playwright install
 ```
 
-4. Set up environment variables:
+4. Configura las variables de entorno:
 ```bash
 cp .env.example .env
-# Edit .env with your configuration
+# Edita .env con tu configuración si es necesario
 ```
 
-5. Set up the database:
-```bash
-npx prisma generate
-npx prisma db push
-```
+## ⚙️ Configuración
 
-## ⚙️ Configuration
-
-### Environment Variables
-
-Create a `.env` file in the root directory with the following variables:
+Crea un archivo `.env` en la raíz del proyecto:
 
 ```env
-# Application
-BASE_URL=https://your-app-url.com
-ENVIRONMENT=development
+# URLs
+BASE_URL=https://practicetestautomation.com
+API_BASE_URL=https://restful-booker.herokuapp.com
 
-# Database
-DATABASE_URL=
-DB_HOST=
-DB_PORT=
-DB_NAME=
-DB_USER=
-DB_PASSWORD=
+# Credenciales de prueba
+TEST_USERNAME=student
+TEST_PASSWORD=Password123
 
-# Test Configuration
+# Configuración de Playwright
 HEADLESS=true
 BROWSER=chromium
 TIMEOUT=30000
 RETRIES=2
 WORKERS=4
-TEST_USERNAME=
-TEST_PASSWORD=
 
-# API Endpoints
-API_BASE_URL_IMPORTACION_DEV=
-API_BASE_URL_GEO_DEV=
-GEO_X_API_KEY=your-api-key
+# Ambiente
+ENVIRONMENT=development
 ```
 
-## 🏗️ Project Structure
+## 🏗️ Estructura del Proyecto
 
 ```
 automation-playwright-pom/
 ├── src/
+│   ├── apiProviders/
+│   │   └── bookerRest.ts          # Cliente API para Restful Booker
 │   ├── config/
-│   │   └── environment.ts          # Environment configuration
+│   │   └── environment.ts          # Configuración de entorno
 │   ├── pages/
 │   │   ├── base/
-│   │   │   └── BasePage.ts         # Base page class
-│   │   └── LoginPage.ts            # Login page object
-│   └── testData/
-│       └── importacionData.json    # Test data files
+│   │   │   └── BasePage.ts        # Clase base para Page Objects
+│   │   └── LoginPage.ts           # Page Object de Login
+│   ├── testData/
+│   │   └── importacionData.json   # Datos de prueba
+│   └── utils/
+│       ├── enums.ts               # Enumeraciones
+│       └── interfaces.ts          # Interfaces TypeScript
 ├── tests/
+│   ├── APIs/
+│   │   └── bookersRest.spec.ts    # Tests de API
 │   ├── e2e/
 │   │   └── web/
-│   │       └── loginTest.spec.ts   # Test specifications
+│   │       └── loginTest.spec.ts  # Tests web E2E
 │   └── setup/
-│       ├── global-setup.ts         # Global test setup
-│       └── global-teardown.ts      # Global test teardown
-├── prisma/
-│   └── schema.prisma               # Database schema
-├── playwright.config.ts            # Playwright configuration
+│       ├── global-setup.ts        # Configuración global
+│       └── global-teardown.ts     # Limpieza global
+├── playwright.config.ts           # Configuración de Playwright
 └── package.json
 ```
 
-## 🧪 Running Tests
+## 🧪 Ejecutar Pruebas
 
-### Run all tests:
+### Ejecutar todas las pruebas:
 ```bash
 npm test
 ```
 
-### Run tests in headed mode:
+### Ejecutar solo pruebas web:
+```bash
+npx playwright test tests/e2e/web/
+```
+
+### Ejecutar solo pruebas de API:
+```bash
+npx playwright test tests/APIs/
+```
+
+### Ejecutar pruebas en modo headed:
 ```bash
 npm run test:headed
 ```
 
-### Run specific test file:
+### Ejecutar un archivo específico:
 ```bash
+npx playwright test tests/APIs/bookersRest.spec.ts
 npx playwright test tests/e2e/web/loginTest.spec.ts
 ```
 
-### Run tests with specific browser:
-```bash
-npx playwright test --project=chromium
-```
-
-### Run tests in debug mode:
+### Ejecutar en modo debug:
 ```bash
 npx playwright test --debug
 ```
 
-## 📊 Reports
+## 📊 Reportes
 
-After running tests, you can view reports:
-
-### HTML Report:
+Ver el reporte HTML:
 ```bash
 npx playwright show-report
 ```
 
-Reports are generated in:
-- `playwright-report/` - HTML report
-- `test-results/` - JSON and JUnit reports
+Los reportes se generan en:
+- `playwright-report/` - Reporte HTML
+- `test-results/` - Resultados JSON y JUnit
 
-## 🔧 Development
+## 🎯 Retos Web (E2E)
 
-### Adding New Page Objects
+### Reto 1 - Login Test
+Corregir el test de login en `loginTest.spec.ts`
 
-1. Create a new page class extending `BasePage`:
+### Reto 2 - Test Exceptions
+Automatización de la ruta: https://practicetestautomation.com/practice-test-exceptions/
+1. Validar la edición del row 1 de pizza por hamburguesa
+2. Validar la agregación de un segundo row con su mensaje de éxito
+3. Validar el row uno deshabilitado
 
-```typescript
-import { Page, Locator } from '@playwright/test';
-import { BasePage } from './base/BasePage';
+### Reto 3 - Test Table
+Automatización de la ruta: https://practicetestautomation.com/practice-test-table/
+1. Validar filtro "Language: Java" y cantidad de registros
+2. Validar filtro "Language: Python" y "Level: Advanced" con mensaje "No matching courses"
+3. Validar filtro "Level: Beginner" sin mensaje de error
+4. Validar filtro "Language: Any" y "Level: Beginner + Intermediate"
+5. Validar ordenamiento por 'Enrollments' de menor a mayor
+6. Validar filtro "Min enrollments: 50,000+" y botón "Reset"
 
-export class YourPage extends BasePage {
-  private readonly yourElement: Locator;
+## 🎯 Retos API
 
-  constructor(page: Page) {
-    super(page);
-    this.yourElement = page.locator('#your-element');
-  }
+### Reto 1 - GET /booking
+Automatizar el endpoint GET /booking con los siguientes casos:
+1. Validar status 200 con firstName y lastName correctos
+2. Validar status 200 con firstName correcto y lastName inexistente (array vacío)
+3. Validar status 200 con firstName incorrecto y lastName correcto
+4. Validar status 200 con checkin y checkout correctos
 
-  public async yourMethod(): Promise<void> {
-    // Implementation
-  }
-}
+### Reto 2 - GET /booking/:id
+1. Crear método `getBookingById` en `bookerRest.ts`
+2. Test con id existente (status 200)
+3. Test con id inexistente (status 404)
+
+### Reto 3 - PUT /booking/:id
+1. Crear método `updateBookingById` en `bookerRest.ts`
+2. Test de flujo completo de actualización:
+   - Buscar una reserva (GET)
+   - Actualizar la reserva (PUT)
+   - Validar la actualización (GET)
+
+## 🔧 Desarrollo
+
+### Linting y Formateo
+```bash
+# Verificar código
+npm run lint
+
+# Corregir automáticamente
+npm run fix
 ```
 
-2. Create corresponding test file in `tests/e2e/web/`
-
-### Database Operations
-
-Use Prisma client for database operations:
-
-```typescript
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-// Your database operations
+### TypeScript
+```bash
+# Verificar tipos
+npm run tsc
 ```
 
-## 🚀 CI/CD Integration
+## 📝 Documentación
 
-The framework is optimized for CI/CD with:
-- Parallel test execution
-- Retry mechanisms
-- Multiple report formats
-- Environment-specific configurations
-
-### GitHub Actions Example:
-
-```yaml
-name: Playwright Tests
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - run: npm ci
-      - run: npx playwright install --with-deps
-      - run: npm test
-```
-
-## 📝 Best Practices
-
-1. **Page Objects**: Keep page objects focused and maintainable
-2. **Test Data**: Use external data files for test inputs
-3. **Assertions**: Use meaningful assertion messages
-4. **Waits**: Prefer explicit waits over implicit ones
-5. **Environment**: Use environment-specific configurations
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-For questions and support, please:
-- Check the documentation
-- Review existing issues
-- Create a new issue with detailed information
-
-## 🔗 Useful Links
-
+- [Restful Booker API Docs](https://restful-booker.herokuapp.com/apidoc/index.html)
+- [Practice Test Automation](https://practicetestautomation.com/)
 - [Playwright Documentation](https://playwright.dev/)
-- [TypeScript Documentation](https://www.typescriptlang.org/)
-- [Prisma Documentation](https://www.prisma.io/)
+
+## 📄 Licencia
+
+MIT License

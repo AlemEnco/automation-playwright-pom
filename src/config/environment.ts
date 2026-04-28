@@ -14,22 +14,6 @@ export interface EnvironmentConfig {
   // Application URLs
   baseUrl: string
 
-  // Database configuration
-  database: {
-    url: string
-    host: string
-    port: number
-    name: string
-    user: string
-    password: string
-    schema: string
-    pool: {
-      min: number
-      max: number
-      idleTimeout: number
-    }
-  }
-
   // Test configuration
   test: {
     headless: boolean
@@ -65,15 +49,7 @@ export interface EnvironmentConfig {
   testSuite: string
 
   // API configuration
-  apiBaseUrlImportacionDev: string
-  apiBaseUrlImportacionProd: string
-  apiBaseUrlImportacionv4: string
-  apiBaseUrlGeoDev: string
-  apiBaseUrlGeoProd: string
-  apiBaseUrlGeoApiv4: string
-
-  //tokens
-  geoXApiKey: string
+  apiBaseUrl: string
 }
 
 /**
@@ -83,21 +59,6 @@ export const environment: EnvironmentConfig = {
   nodeEnv: process.env.NODE_ENV || 'development',
 
   baseUrl: process.env.BASE_URL!, // is obtained from the .env file
-
-  database: {
-    url: process.env.DATABASE_URL!,
-    host: process.env.DB_HOST || 'localhost', // is obtained from the .env file
-    port: parseNumber(process.env.DB_PORT, 5432),
-    name: process.env.DB_NAME || 'qa_automation_db',
-    user: process.env.DB_USER || 'username', // is obtained from the .env file
-    password: process.env.DB_PASSWORD || 'password', // is obtained from the .env file
-    schema: process.env.DB_SCHEMA || 'public',
-    pool: {
-      min: parseNumber(process.env.DB_POOL_MIN, 2),
-      max: parseNumber(process.env.DB_POOL_MAX, 10),
-      idleTimeout: parseNumber(process.env.DB_POOL_IDLE_TIMEOUT, 30000)
-    }
-  },
 
   test: {
     headless: parseBoolean(process.env.HEADLESS, true),
@@ -128,13 +89,7 @@ export const environment: EnvironmentConfig = {
   environment: process.env.ENVIRONMENT || 'development', // is obtained from the .env file
   testSuite: process.env.TEST_SUITE || 'smoke',
 
-  apiBaseUrlImportacionDev: process.env.API_BASE_URL_IMPORTACION_DEV || '', // is obtained from the .env file
-  apiBaseUrlImportacionProd: process.env.API_BASE_URL_IMPORTACION_PROD || '',
-  apiBaseUrlImportacionv4: process.env.API_BASE_URL_IMPORTACIONV4 || '',
-  apiBaseUrlGeoDev: process.env.API_BASE_URL_GEO_DEV || '',
-  apiBaseUrlGeoProd: process.env.API_BASE_URL_GEO_PROD || '',
-  apiBaseUrlGeoApiv4: process.env.API_BASE_URL_GEO_API_v4 || '',
-  geoXApiKey: process.env.GEO_X_API_KEY || ''
+  apiBaseUrl: process.env.API_BASE_URL || ''
 }
 
 function parseNumber(value: string | undefined, defaultValue: number): number {

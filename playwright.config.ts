@@ -21,7 +21,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : 0,
+  workers: process.env.CI ? 1 : 4,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html', { outputFolder: 'playwright-report' }],
@@ -33,14 +33,14 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
+    headless: environment.test.headless,
     baseURL: environment.baseUrl, // solo para pruebas web
     actionTimeout: environment.test.timeout,
     navigationTimeout: environment.test.timeout,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     ignoreHTTPSErrors: true,
-    viewport: { width: 1280, height: 720 },
-    userAgent: 'Playwright-ShippingPlatform-Automation',
+    serviceWorkers: 'block',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry'
@@ -98,7 +98,8 @@ export default defineConfig({
   },
   outputDir: 'test-results/',
   preserveOutput: 'failures-only',
-  maxFailures: process.env.CI ? 10 : 0,
+  ...(process.env.CI && { maxFailures: 10 }),
+  // @ts-ignore - Custom metadata property
   metadata: {
     'test-environment': environment.environment,
     'base-url': environment.baseUrl,
