@@ -182,6 +182,7 @@ Automatización de la ruta: https://practicetestautomation.com/practice-test-tab
 6. Validar filtro "Min enrollments: 50,000+" y botón "Reset"
 
 ## 🎯 Retos API
+Información de APIs en la ruta: https://restful-booker.herokuapp.com/apidoc/index.html#api-Booking-GetBookings
 
 ### Reto 1 - GET /booking
 Automatizar el endpoint GET /booking con los siguientes casos:
